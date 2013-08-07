@@ -104,4 +104,12 @@ public class RolesConstants {
 
     // BULK APPLICATION
     public static final String BULK_APPLICATION = "BulkApplication";
+    
+    // DISPUTES
+    
+    public static final String ADMINISTRATIVE_DISPUTE_VIEW = "DisputeView";
+    public static final String ADMINISTRATIVE_DISPUTE_SAVE = "DisputeSave";
+    public static final String ADMINISTRATIVE_DISPUTE_COMMENTS_SAVE = "DisputeCommentsSave";
+    public static final String ADMINISTRATIVE_DISPUTE_SEARCH = "DisputeSearch";
+    public static final String ADMINISTRATIVE_DISPUTE_PARTY_SAVE = "DisputePartySave";
 }
