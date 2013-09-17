@@ -82,6 +82,7 @@ public class RolesConstants {
     public static final String GIS_VIEW_MAP = "ViewMap";
     public static final String GIS_PRINT = "PrintMap";
     public static final String GIS_EXPORT_MAP = GIS_PRINT; //"ExportMap";
+//    public static final String GIS_EXPORT_MAP = "ExportMap";  IN GENERIC IS USED THIS ONE -- TBV WHY HERE IS USED THE GIS_PRINT???
 
     // CADASTRE
     public static final String CADASTRE_PARCEL_SAVE = "ParcelSave";
@@ -89,9 +90,10 @@ public class RolesConstants {
     // PARTY
     public static final String PARTY_SAVE = "PartySave";
     public static final String PARTY_RIGHTHOLDERS_SAVE = "RHSave";
+    public static final String PARTY_SEARCH = "PartySearch";
 
     // REPORTS
-    public static final String REPORTS_VIEW = "ReportGen";
+    public static final String REPORTS_VIEW = "ReportGenerate";
     
     // ARCHIVE
     public static final String ARCHIVE_ARCHIVE_APPS = "ArchiveApps";
@@ -101,7 +103,7 @@ public class RolesConstants {
     public static final String ADMIN_MANAGE_REFDATA = "ManageRefdata";
     public static final String ADMIN_MANAGE_SETTINGS = "ManageSettings";
     public static final String ADMIN_MANAGE_BR = "ManageBR";
-
+    public static final String ADMIN_CHANGE_PASSWORD = "ChangePassword";
     // BULK APPLICATION
     public static final String BULK_APPLICATION = "BulkApplication";
     
