@@ -103,7 +103,7 @@ public class RolesConstants {
     public static final String ADMIN_MANAGE_REFDATA = "ManageRefdata";
     public static final String ADMIN_MANAGE_SETTINGS = "ManageSettings";
     public static final String ADMIN_MANAGE_BR = "ManageBR";
-    public static final String ADMIN_CHANGE_PASSWORD = "ChangePassword";
+    public static final String ADMIN_CHANGE_PASSWORD = "ManageUserPassword";
     // BULK APPLICATION
     public static final String BULK_APPLICATION = "BulkApplication";
     
@@ -114,4 +114,9 @@ public class RolesConstants {
     public static final String ADMINISTRATIVE_DISPUTE_COMMENTS_SAVE = "DisputeCommentsSave";
     public static final String ADMINISTRATIVE_DISPUTE_SEARCH = "DisputeSearch";
     public static final String ADMINISTRATIVE_DISPUTE_PARTY_SAVE = "DisputePartySave";
+	
+	//CONSOLIDATION
+    public static final String CONSOLIDATION_EXTRACT = "consolidationExt";
+    public static final String CONSOLIDATION_CONSOLIDATE = "consolidationCons";
+    
 }
