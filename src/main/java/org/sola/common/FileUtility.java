@@ -70,6 +70,8 @@ public class FileUtility {
     private static long resizedCacheSizeBytes = 120 * 1024 * 1024;
     private static int minNumberCachedFiles = 10;
     private static long maxFileSizeBytes = 100 * 1024 * 1024;
+   
+    
     private static String cachePath = System.getProperty("user.home") + "/sola/cache/documents/";
 
     /**
@@ -782,7 +784,7 @@ public class FileUtility {
         deleteFile(file);
     }
 
-    public static String compress(String fileName, String password) {
+     public static String compress(String fileName, String password) {
         fileName = sanitizeFileName(fileName, true);
         String inputFilePath = getCachePath() + File.separator + fileName;
         String zipFileName = getFileNameWithoutExtension(fileName) + ".zip";
@@ -818,4 +820,5 @@ public class FileUtility {
         zipFile.extractAll(destinationPath);
         return fileUncompressed;
     }
+    
 }
