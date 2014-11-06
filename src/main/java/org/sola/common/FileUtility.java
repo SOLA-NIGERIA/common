@@ -1,6 +1,6 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
+ * Copyright (C) 2014 - Food and Agriculture Organization of the United Nations
  * (FAO). All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,6 +38,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -47,9 +48,11 @@ import javax.activation.FileDataSource;
 import javax.swing.ImageIcon;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.io.ZipInputStream;
 import net.lingala.zip4j.model.FileHeader;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
+import org.apache.commons.io.FileUtils;
 import org.apache.sanselan.Sanselan;
 import org.jvnet.staxex.StreamingDataHandler;
 import org.sola.common.messaging.ClientMessage;
@@ -66,13 +69,16 @@ import org.sola.common.messaging.ServiceMessage;
 public class FileUtility {
 
     public final static String csv = "csv";
+    // Ticket #397 - use !! to delimit the location of path separators as an
+    // alternative to the default ;. This is because SOLA uses ; as a special
+    // path separator character when dealing with NetworkFolder. 
+    public final static String alternatePathSeparator = "!!";
     private static long maxCacheSizeBytes = 200 * 1024 * 1024;
     private static long resizedCacheSizeBytes = 120 * 1024 * 1024;
     private static int minNumberCachedFiles = 10;
     private static long maxFileSizeBytes = 100 * 1024 * 1024;
-   
-    
     private static String cachePath = System.getProperty("user.home") + "/sola/cache/documents/";
+    private static final int BUFF_SIZE = 4096;
 
     /**
      * Checks the cache to ensure it won't exceed the max size cache size. If
@@ -148,7 +154,8 @@ public class FileUtility {
      * The maximum size of a file (in bytes) that can be loaded into SOLA.
      * Default is 100MB.
      *
-     * <p>SOLA uses a file streaming service to upload and download files to and
+     * <p>
+     * SOLA uses a file streaming service to upload and download files to and
      * from the client. The file streaming service streams files directly to
      * disk and does not store them in memory allowing the SOLA client
      * application to potentially handle files of any size. However, be aware
@@ -552,16 +559,18 @@ public class FileUtility {
      * file. Used to allow more efficient management of large file transfers
      * between the SOLA client(s) and the web services.
      *
-     * <p>If the DataHandler is a {@linkplain StreamingDataHandler}, then the
+     * <p>
+     * If the DataHandler is a {@linkplain StreamingDataHandler}, then the
      * {@linkplain StreamingDataHandler#moveTo(java.io.File)} method is used to
      * save the file to disk. Otherwise the InputStream from the DataHandler is
      * written to disk using
      * {@linkplain #writeFileToCache(java.io.InputStream, java.io.File) writeFileToCache}.</p>
      *
-     * <p>Note that file streaming is not currently supported if Metro security
-     * is used. Refer to http://java.net/jira/browse/WSIT-1081 for details.
-     * Using Security also substantially increases the memory required to handle
-     * large files with a practical limit around 15MB to 20MB.</p>
+     * <p>
+     * Note that file streaming is not currently supported if Metro security is
+     * used. Refer to http://java.net/jira/browse/WSIT-1081 for details. Using
+     * Security also substantially increases the memory required to handle large
+     * files with a practical limit around 15MB to 20MB.</p>
      *
      * @param dataHandler The dataHandler representing the file.
      * @param fileName The name of the file to write the DataHander stream to.
@@ -784,7 +793,14 @@ public class FileUtility {
         deleteFile(file);
     }
 
-     public static String compress(String fileName, String password) {
+    public static String createFileFromContent(String fileName, String content)
+            throws IOException {
+        String filePath = getCachePath() + File.separator + sanitizeFileName(fileName, false);
+        FileUtils.writeStringToFile(new File(filePath), content);
+        return filePath;
+    }
+
+    public static String compress(String fileName, String password) {
         fileName = sanitizeFileName(fileName, true);
         String inputFilePath = getCachePath() + File.separator + fileName;
         String zipFileName = getFileNameWithoutExtension(fileName) + ".zip";
@@ -806,10 +822,37 @@ public class FileUtility {
         }
     }
 
-    public static String uncompress(String fileName, String password) throws ZipException {
-        fileName = sanitizeFileName(fileName, true);
+    public static String compress(String archiveFileName, ArrayList<String> fileNamesToAdd, String password) {
+        String zipFileName = getFileNameWithoutExtension(archiveFileName) + ".zip";
+        String outputFilePath = getCachePath() + File.separator + zipFileName;
+        try {
+            ArrayList filesToAdd = new ArrayList();
+            for (String fileNameToAdd : fileNamesToAdd) {
+                filesToAdd.add(new File(fileNameToAdd));
+            }
+            File currentArchive = new File(outputFilePath);
+            if (currentArchive.exists()){
+                FileUtils.deleteQuietly(currentArchive);
+            }
+            ZipFile zipFile = new ZipFile(outputFilePath);
+            ZipParameters parameters = new ZipParameters();
+            parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
+            parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_ULTRA);
+            parameters.setEncryptFiles(true);
+            parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES);
+            parameters.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
+            parameters.setPassword(password);
+            zipFile.addFiles(filesToAdd, parameters);
+            return zipFileName;
+        } catch (ZipException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static String uncompress(String folderDestination, String archiveFileName, String password) throws ZipException {
+        archiveFileName = sanitizeFileName(archiveFileName, true);
         //Full path of the file that is compressed
-        String inputFilePath = getCachePath() + File.separator + fileName;
+        String inputFilePath = getCachePath() + File.separator + archiveFileName;
         String destinationPath = getCachePath();
         ZipFile zipFile = new ZipFile(inputFilePath);
         if (zipFile.isEncrypted()) {
@@ -820,5 +863,104 @@ public class FileUtility {
         zipFile.extractAll(destinationPath);
         return fileUncompressed;
     }
-    
+
+    public static ZipFile getArchiveFile(String archiveFileName, String password)
+            throws ZipException {
+        archiveFileName = sanitizeFileName(archiveFileName, true);
+        //Full path of the file that is compressed
+        String inputFilePath = getCachePath() + File.separator + archiveFileName;
+        ZipFile zipFile = new ZipFile(inputFilePath);
+        if (zipFile.isEncrypted()) {
+            zipFile.setPassword(password);
+        }
+        return zipFile;
+    }
+
+    public static byte[] getArchiveFileContent(ZipFile zipFile, FileHeader fileHeader)
+            throws IOException {
+        ZipInputStream inputStream = null;
+        ByteArrayOutputStream outputStream = null;
+        try {
+            inputStream = zipFile.getInputStream(fileHeader);
+            int bytesToRead;
+            byte[] buffer = new byte[BUFF_SIZE];
+            outputStream = new ByteArrayOutputStream();
+            while ((bytesToRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesToRead);
+            }
+            return outputStream.toByteArray();
+        } catch (ZipException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        }
+    }
+
+    /**
+     * Deletes directory with all sub folders and files.
+     *
+     * @param file Directory to delete
+     * @throws java.io.IOException
+     */
+    public static void deleteDirectory(File file) throws IOException {
+        if (file.isDirectory()) {
+            //directory is empty, delete it
+            if (file.list().length == 0) {
+                file.delete();
+            } else {
+                // loop through the files
+                String files[] = file.list();
+
+                for (String temp : files) {
+                    File fileDelete = new File(file, temp);
+                    //recursive delete
+                    deleteDirectory(fileDelete);
+                }
+
+                //check the directory again, if empty then delete it
+                if (file.list().length == 0) {
+                    file.delete();
+                }
+            }
+
+        } else {
+            //if file, then delete it
+            file.delete();
+        }
+    }
+
+    /**
+     * Formats file size, applying KB, MB, GB units.
+     *
+     * @param size Size to format
+     * @return
+     */
+    public static String formatFileSize(long size) {
+        if (size == 0) {
+            return "0";
+        }
+
+        if (size < 1024) {
+            return size + "B";
+        }
+
+        if (size >= 1024 && size < 1048576) {
+            return Math.round((size / 1024) * 100.0) / 100.0 + "KB";
+        }
+
+        if (size >= 1048576 && size < 1073741824) {
+            return Math.round((size / 1024 / 1024) * 100.0) / 100.0 + "MB";
+        }
+
+        if (size >= 1073741824 && size < 1099511627776L) {
+            return Math.round((size / 1024 / 1024 / 1024) * 100.0) / 100.0 + "GB";
+        }
+
+        return Math.round((size / 1024 / 1024 / 1024 / 1024) * 100.0) / 100.0 + "TB";
+    }
 }
