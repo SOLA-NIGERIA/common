@@ -264,7 +264,7 @@ public class NetworkFolder {
      * @return
      */
     public List<FileMetaData> getAllFiles(String fileNameFilter) {
-        fileNameFilter = fileNameFilter == null ? "*" : fileNameFilter;
+        fileNameFilter = fileNameFilter == null ? ".*" : fileNameFilter;
         List<FileMetaData> result = new ArrayList<FileMetaData>();
         if (isNetworkFolder) {
             try {

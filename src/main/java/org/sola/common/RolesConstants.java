@@ -59,9 +59,7 @@ public class RolesConstants {
     public static final String APPLICATION_VALIDATE = "ApplnValidate";
     public static final String APPLICATION_DISPATCH = "ApplnDispatch";
     public static final String APPLICATION_ARCHIVE = "ApplnArchive";
-	public static final String APPLICATION_TRANSFER = "ApplnTransfer";
-
-
+    public static final String APPLICATION_TRANSFER = "ApplnTransfer";
     // ADMINISTRATIVE
     public static final String ADMINISTRATIVE_BA_UNIT_SAVE = "BaunitSave";
     public static final String ADMINISTRATIVE_RRR_SAVE = "BaunitrrrSave";
@@ -71,7 +69,7 @@ public class RolesConstants {
     public static final String ADMINISTRATIVE_BA_UNIT_SEARCH = "BaunitSearch";
     public static final String ADMINISTRATIVE_SYSTEMATIC_REGISTRATION = "systematicRegn";
     public static final String ADMINISTRATIVE_RIGHTS_EXPORT = "RightsExport";
-    
+    public static final String ADMINISTRATIVE_ASSIGN_TEAM = "BaunitTeam";
     // TRANSACTIONAL DOCUMENTS
     public static final String SOURCE_TRANSACTIONAL = "TransactionCommit";
 
@@ -83,19 +81,20 @@ public class RolesConstants {
     // GIS
     public static final String GIS_VIEW_MAP = "ViewMap";
     public static final String GIS_PRINT = "PrintMap";
-    public static final String GIS_EXPORT_MAP = GIS_PRINT; //"ExportMap";
-//    public static final String GIS_EXPORT_MAP = "ExportMap";  IN GENERIC IS USED THIS ONE -- TBV WHY HERE IS USED THE GIS_PRINT???
-
+    public static final String GIS_EXPORT_MAP = "ExportMap";
+    public static final String GIS_MEASURE_MAP = "MeasureMap";
+    public static final String GIS_FEATURE_EDITOR = "MapFeatureEditor";
+    public static final String GIS_ZONE_EDITOR = "MapZoneEditor";
     // CADASTRE
     public static final String CADASTRE_PARCEL_SAVE = "ParcelSave";
 
     // PARTY
     public static final String PARTY_SAVE = "PartySave";
-    public static final String PARTY_RIGHTHOLDERS_SAVE = "RHSave";
     public static final String PARTY_SEARCH = "PartySearch";
-
+    public static final String PARTY_RIGHTHOLDERS_SAVE = "RHSave";
     // REPORTS
     public static final String REPORTS_VIEW = "ReportGenerate";
+    public static final String REPORTS_GENDER = "ReportGender";
     
     // ARCHIVE
     public static final String ARCHIVE_ARCHIVE_APPS = "ArchiveApps";
@@ -105,13 +104,11 @@ public class RolesConstants {
     public static final String ADMIN_MANAGE_REFDATA = "ManageRefdata";
     public static final String ADMIN_MANAGE_SETTINGS = "ManageSettings";
     public static final String ADMIN_MANAGE_BR = "ManageBR";
-//    public static final String ADMIN_CHANGE_PASSWORD = "ManageUserPassword";
     public static final String ADMIN_CHANGE_PASSWORD = "ChangePassword";
     // BULK APPLICATION
     public static final String BULK_APPLICATION = "BulkApplication";
     
-    // DISPUTES
-    
+    // DISPUTES  
     public static final String ADMINISTRATIVE_DISPUTE_VIEW = "DisputeView";
     public static final String ADMINISTRATIVE_DISPUTE_SAVE = "DisputeSave";
     public static final String ADMINISTRATIVE_DISPUTE_COMMENTS_SAVE = "DisputeCommentsSave";
@@ -121,5 +118,25 @@ public class RolesConstants {
 	//CONSOLIDATION
     public static final String CONSOLIDATION_EXTRACT = "consolidationExt";
     public static final String CONSOLIDATION_CONSOLIDATE = "consolidationCons";
-    
+    // COMMUNITY SERVER
+    public static final String CS_ACCESS_CS = "AccessCS";
+    public static final String CS_MODERATE_CLAIM = "ModerateClaim";
+    public static final String CS_REVIEW_CLAIM = "ReviewClaim";
+    public static final String CS_RECORD_CLAIM = "RecordClaim";
+     // DATA SECURITY CLASSIFICATION
+    public static final String CLASSIFICATION_CHANGE_CLASS = "ChangeSecClass";
+    public static final String CLASSIFICATION_UNRESTRICTED = "01SEC_Unrestricted";
+    public static final String CLASSIFICATION_RESTRICTED = "02SEC_Restricted";
+    public static final String CLASSIFICATION_CONFIDENTIAL = "03SEC_Confidential";
+    public static final String CLASSIFICATION_SECRET = "04SEC_Secret";
+    public static final String CLASSIFICATION_TOPSECRET = "05SEC_TopSecret";
+    public static final String CLASSIFICATION_SUPPRESSION_ORDER = "10SEC_SuppressOrd";
+    // SERVICES
+     public static final String SERVICE_START_CHECKLIST = "checklist";
+     public static final String SERVICE_START_PUBLIC_DISPLAY = "publicDisplay";
+     public static final String SERVICE_START_OBJECTIONS = "slObjection";
+     public static final String SERVICE_START_NOTIFY = "slNotify";
+     public static final String SERVICE_START_NEGOTIATE = "slNegotiate";
+     // WORKFLOW
+     public static final String WORKFLOW_EDIT_OBJECTION_COMMENT = "ObjectionCommentEdit";
 }

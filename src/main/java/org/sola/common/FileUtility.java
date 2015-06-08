@@ -44,6 +44,7 @@ import java.util.List;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.swing.ImageIcon;
+import org.apache.commons.io.FileUtils;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipInputStream;
@@ -798,6 +799,39 @@ public class FileUtility {
         return filePath;
     }
 
+    /**
+     * Deletes directory with all sub folders and files.
+     *
+     * @param file Directory to delete
+     * @throws java.io.IOException
+     */
+    public static void deleteDirectory(File file) throws IOException {
+        if (file.isDirectory()) {
+            //directory is empty, delete it
+            if (file.list().length == 0) {
+                file.delete();
+            } else {
+                // loop through the files
+                String files[] = file.list();
+
+                for (String temp : files) {
+                    File fileDelete = new File(file, temp);
+                    //recursive delete
+                    deleteDirectory(fileDelete);
+                }
+
+                //check the directory again, if empty then delete it
+                if (file.list().length == 0) {
+                    file.delete();
+                }
+            }
+
+        } else {
+            //if file, then delete it
+            file.delete();
+        }
+    }
+
     public static String compress(String fileName, String password) {
         fileName = sanitizeFileName(fileName, true);
         String inputFilePath = getCachePath() + File.separator + fileName;
@@ -847,10 +881,10 @@ public class FileUtility {
         }
     }
 
-    public static String uncompress(String folderDestination, String archiveFileName, String password) throws ZipException {
-        archiveFileName = sanitizeFileName(archiveFileName, true);
+    public static String uncompress(String fileName, String password) throws ZipException {
+        fileName = sanitizeFileName(fileName, true);
         //Full path of the file that is compressed
-        String inputFilePath = getCachePath() + File.separator + archiveFileName;
+        String inputFilePath = getCachePath() + File.separator + fileName;
         String destinationPath = getCachePath();
         ZipFile zipFile = new ZipFile(inputFilePath);
         if (zipFile.isEncrypted()) {
@@ -861,6 +895,11 @@ public class FileUtility {
         zipFile.extractAll(destinationPath);
         return fileUncompressed;
     }
+
+    public static String uncompress(String folderDestination, String archiveFileName, String password) throws ZipException {
+       return uncompress(archiveFileName, password);
+    }
+
 
     public static ZipFile getArchiveFile(String archiveFileName, String password)
             throws ZipException {
@@ -899,66 +938,34 @@ public class FileUtility {
         }
     }
 
-    /**
-     * Deletes directory with all sub folders and files.
-     *
-     * @param file Directory to delete
-     * @throws java.io.IOException
-     */
-    public static void deleteDirectory(File file) throws IOException {
-        if (file.isDirectory()) {
-            //directory is empty, delete it
-            if (file.list().length == 0) {
-                file.delete();
-            } else {
-                // loop through the files
-                String files[] = file.list();
 
-                for (String temp : files) {
-                    File fileDelete = new File(file, temp);
-                    //recursive delete
-                    deleteDirectory(fileDelete);
-                }
-
-                //check the directory again, if empty then delete it
-                if (file.list().length == 0) {
-                    file.delete();
-                }
-            }
-
-        } else {
-            //if file, then delete it
-            file.delete();
-        }
-    }
 
     /**
      * Formats file size, applying KB, MB, GB units.
-     *
      * @param size Size to format
-     * @return
+     * @return 
      */
-    public static String formatFileSize(long size) {
-        if (size == 0) {
+    public static String formatFileSize(long size){
+        if(size == 0){
             return "0";
         }
-
-        if (size < 1024) {
+        
+        if(size < 1024){
             return size + "B";
         }
-
-        if (size >= 1024 && size < 1048576) {
-            return Math.round((size / 1024) * 100.0) / 100.0 + "KB";
+        
+        if(size >= 1024 && size < 1048576){
+            return Math.round((size/1024)*100.0)/100.0 + "KB";
         }
-
-        if (size >= 1048576 && size < 1073741824) {
-            return Math.round((size / 1024 / 1024) * 100.0) / 100.0 + "MB";
+        
+        if(size >= 1048576 && size < 1073741824){
+            return Math.round((size/1024/1024)*100.0)/100.0 + "MB";
         }
-
-        if (size >= 1073741824 && size < 1099511627776L) {
-            return Math.round((size / 1024 / 1024 / 1024) * 100.0) / 100.0 + "GB";
+        
+        if(size >= 1073741824 && size < 1099511627776L){
+            return Math.round((size/1024/1024/1024)*100.0)/100.0 + "GB";
         }
-
-        return Math.round((size / 1024 / 1024 / 1024 / 1024) * 100.0) / 100.0 + "TB";
+        
+        return Math.round((size/1024/1024/1024/1024)*100.0)/100.0 + "TB";
     }
 }
