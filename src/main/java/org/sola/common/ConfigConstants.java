@@ -1,30 +1,28 @@
 /**
  * ******************************************************************************************
- * Copyright (C) 2012 - Food and Agriculture Organization of the United Nations
- * (FAO). All rights reserved.
+ * Copyright (C) 2015 - Food and Agriculture Organization of the United Nations (FAO).
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice,this
- * list of conditions and the following disclaimer. 2. Redistributions in binary
- * form must reproduce the above copyright notice,this list of conditions and
- * the following disclaimer in the documentation and/or other materials provided
- * with the distribution. 3. Neither the name of FAO nor the names of its
- * contributors may be used to endorse or promote products derived from this
- * software without specific prior written permission.
+ *    1. Redistributions of source code must retain the above copyright notice,this list
+ *       of conditions and the following disclaimer.
+ *    2. Redistributions in binary form must reproduce the above copyright notice,this list
+ *       of conditions and the following disclaimer in the documentation and/or other
+ *       materials provided with the distribution.
+ *    3. Neither the name of FAO nor the names of its contributors may be used to endorse or
+ *       promote products derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT,STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,STRICT LIABILITY,OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * *********************************************************************************************
  */
 package org.sola.common;
@@ -197,4 +195,217 @@ public class ConfigConstants {
      * changes to this setting to take effect.
      */
     public static final String MAP_NORTH = "map-north";
+    /**
+     * Maximum file size in KB for uploading.
+     */
+    public static final String MAX_FILE_SIZE = "max-file-size";
+    /**
+     * Maximum size of all files in KB, uploaded by user during the day.
+     */
+    public static final String MAX_UPLOADING_DAILY_LIMIT = "max-uploading-daily-limit";
+    /**
+     * Duration of moderation time in days for submitted claim.
+     */
+    public static final String MODERATION_DAYS = "moderation-days";
+    /**
+     * Account activation timeout in hours. After this time elapsed, activation
+     * should expire.
+     */
+    public static final String ACCOUNT_ACTIVATION_TIMEOUT = "account-activation-timeout";
+    /**
+     * Email address of server administrator.
+     */
+    public static final String EMAIL_ADMIN_ADDRESS = "email-admin-address";
+    /**
+     * Name of server administrator.
+     */
+    public static final String EMAIL_ADMIN_NAME = "email-admin-name";
+    /**
+     * JNDI name of the mailer service, configured on GlassFish
+     */
+    public static final String EMAIL_MAILER_JNDI_NAME = "email-mailer-jndi-name";
+    /**
+     * Enables or disables email service. 1 - enable, 0 - disable.
+     */
+    public static final String EMAIL_ENABLE_SERVICE = "email-enable-email-service";
+    /**
+     * Message body format. text - for simple text format, html - for html format
+     */
+    public static final String EMAIL_BODY_FORMAT = "email-body-format";
+    
+    
+    
+    /**
+     * New claim challenge body text.
+     */
+    public static final String EMAIL_MSG_REC_NOTIFIABLE_BODY = "email-msg-notifiable-submit-body";
+     /**
+     * Subject text for new user registration on OpenTenure Web-site. Sent to
+     * user.
+     */
+    public static final String EMAIL_MSG_NOTIFIABLE_SUBJECT = "email-msg-notifiable-subject";
+  
+    /**
+     * New claim challenge body text.
+     */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_SUBMITTED_BODY = "email-msg-claim-challenge-submitted-body";
+    /**
+     * New claim challenge subject text.
+     */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_SUBMITTED_SUBJECT = "email-msg-claim-challenge-submitted-subject";
+    /**
+     * Claim challenge update body text.
+     */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_UPDATED_BODY = "email-msg-claim-challenge-updated-body";
+    /**
+     * Claim challenge update subject text.
+     */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_UPDATED_SUBJECT = "email-msg-claim-challenge-updated-subject";
+    /**
+     * New claim body text.
+     */
+    public static final String EMAIL_MSG_CLAIM_SUBMITTED_BODY = "email-msg-claim-submit-body";
+    /**
+     * New claim subject text.
+     */
+    public static final String EMAIL_MSG_CLAIM_SUBMITTED_SUBJECT = "email-msg-claim-submit-subject";
+    /**
+     * Body text for claim withdrawal action
+     */
+    public static final String EMAIL_MSG_CLAIM_WITHDRAW_BODY = "email-msg-claim-withdraw-body";
+    /**
+     * Subject text for claim withdrawal action
+     */
+    public static final String EMAIL_MSG_CLAIM_WITHDRAW_SUBJECT = "email-msg-claim-withdraw-subject";
+    /** Body text for claim reject action */
+    public static final String EMAIL_MSG_CLAIM_REJECT_BODY = "email-msg-claim-reject-body";
+    /** Subject text for claim reject action */
+    public static final String EMAIL_MSG_CLAIM_REJECT_SUBJECT = "email-msg-claim-reject-subject";
+    /** Body text for claim review approve action */
+    public static final String EMAIL_MSG_CLAIM_REVIEW_APPROVE_BODY = "email-msg-claim-approve-review-body";
+    /** Subject text for claim review approve action */
+    public static final String EMAIL_MSG_CLAIM_REVIEW_APPROVE_SUBJECT = "email-msg-claim-approve-review-subject";
+    /** Body text for claim moderation approve action */
+    public static final String EMAIL_MSG_CLAIM_MODERATION_APPROVE_BODY = "email-msg-claim-approve-moderation-body";
+    /** Subject text for claim moderation approve action */
+    public static final String EMAIL_MSG_CLAIM_MODERATION_APPROVE_SUBJECT = "email-msg-claim-approve-moderation-subject";
+    /**
+     * Claim update body text.
+     */
+    public static final String EMAIL_MSG_CLAIM_UPDATED_BODY = "email-msg-claim-updated-body";
+    /**
+     * Claim update subject text.
+     */
+    public static final String EMAIL_MSG_CLAIM_UPDATED_SUBJECT = "email-msg-claim-updated-subject";
+    /** Body text for claim challenge review action. */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_REVIEW_BODY = "email-msg-claim-challenge-approve-review-body";
+    /** Subject text for claim challenge review action. */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_REVIEW_SUBJECT = "email-msg-claim-challenge-approve-review-subject";
+    /** Body text for claim challenge moderation action. */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_MODERATION_BODY = "email-msg-claim-challenge-approve-moderation-body";
+    /** Subject text for claim challenge moderation action. */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_MODERATION_SUBJECT = "email-msg-claim-challenge-approve-moderation-subj";
+    /** Body text for claim challenge rejection action. */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_REJECTION_BODY = "email-msg-claim-challenge-reject-body";
+    /** Subject text for claim challenge rejection action. */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_REJECTION_SUBJECT = "email-msg-claim-challenge-reject-subject";
+    /** Body text for claim challenge withdrawal action. */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_WITHDRAWAL_BODY = "email-msg-claim-challenge-withdraw-body";
+    /** Subject text for claim challenge withdrawal action. */
+    public static final String EMAIL_MSG_CLAIM_CHALLENGE_WITHDRAWAL_SUBJECT = "email-msg-claim-challenge-withdraw-subject";
+    /**
+     * Message text for delivery failure.
+     */
+    public static final String EMAIL_MSG_FAILED_SEND_BODY = "email-msg-failed-send-body";
+    /**
+     * Subject text for delivery failure of message.
+     */
+    public static final String EMAIL_MSG_FAILED_SEND_SUBJECT = "email-msg-failed-send-subject";
+    /**
+     * Message text for password restore.
+     */
+    public static final String EMAIL_MSG_PASSWD_RESTORE_BODY = "email-msg-pswd-restore-body";
+    /**
+     * Password restore subject.
+     */
+    public static final String EMAIL_MSG_PASSWD_RESTORE_SUBJECT = "email-msg-pswd-restore-subject";
+    /**
+     * Message text for new user registration on OpenTenure Web-site. Sent to
+     * user.
+     */
+    public static final String EMAIL_MSG_REG_BODY = "email-msg-reg-body";
+    /**
+     * Subject text for new user registration on OpenTenure Web-site. Sent to
+     * user.
+     */
+    public static final String EMAIL_MSG_REG_SUBJECT = "email-msg-reg-subject";
+    /**
+     * Message text for new user registration on OpenTenure Web-site. Sent to
+     * system administrator.
+     */
+    public static final String EMAIL_MSG_USER_REG_BODY = "email-msg-user-registration-body";
+    /**
+     * Subject text for new user registration on OpenTenure Web-site. Sent to
+     * system administrator.
+     */
+    public static final String EMAIL_MSG_USER_REG_SUBJECT = "email-msg-user-registration-subject";
+    /**
+     * Message text for new user registration on OpenTenure Web-site. Sent to
+     * user.
+     */
+    public static final String EMAIL_MSG_ACTIVATION_BODY = "email-msg-user-activation-body";
+    /**
+     * Subject text for new user registration on OpenTenure Web-site. Sent to
+     * user.
+     */
+    public static final String EMAIL_MSG_ACTIVATION_SUBJECT = "email-msg-user-activation-subject";
+    /**
+     * Number of attempts to send email with first interval timeout
+     */
+    public static final String EMAIL_SEND_ATTEMPTS1 = "email-send-attempts1";
+    /**
+     * Number of attempts to send email with second interval timeout
+     */
+    public static final String EMAIL_SEND_ATTEMPTS2 = "email-send-attempts2";
+    /**
+     * Number of attempts to send email with third interval timeout
+     */
+    public static final String EMAIL_SEND_ATTEMPTS3 = "email-send-attempts3";
+    /**
+     * Time interval in minutes for the first attempt to send email message.
+     */
+    public static final String EMAIL_SEND_INTERVAL1 = "email-send-interval1";
+    /**
+     * Time interval in minutes for the second attempt to send email message.
+     */
+    public static final String EMAIL_SEND_INTERVAL2 = "email-send-interval2";
+    /**
+     * Time interval in minutes for the third attempt to send email message.
+     */
+    public static final String EMAIL_SEND_INTERVAL3 = "email-send-interval3";
+    /**
+     * Time interval in seconds for email service to check and process scheduled messages.
+     */
+    public static final String EMAIL_SERVICE_INTERVAL = "email-service-interval";
+    
+    /** Open Tenure community area where parcels can be claimed */
+    public static final String OT_COMMUNITY_AREA = "ot-community-area";
+    
+    /** Full path to PostgreSQL utilities (bin) folder (e.g. C:\Program Files\PostgreSQL\9.1\bin). Used for backup/restore implementation of SOLA Web admin application */
+    public static final String DB_UTILITIES_FOLDER = "db-utilities-folder";
+    
+    /** SOLA product name */
+    public static final String PRODUCT_NAME = "product-name";
+    
+    /** SOLA product code */
+    public static final String PRODUCT_CODE = "product-code";
+    
+    /** SOLA Registry */
+    public static final String SOLA_REGISTRY = "sr";
+    /** SOLA Systematic Registration */
+    public static final String SOLA_SYSTEMATIC_REGISTRATION = "ssr";
+    /** SOLA State Land */
+    public static final String SOLA_STATE_LAND = "ssl";
+    /** SOLA Community Server */
+    public static final String SOLA_COMMUNITY_SERVER = "scs";
 }
