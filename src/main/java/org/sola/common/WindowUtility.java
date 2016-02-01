@@ -29,10 +29,19 @@
 package org.sola.common;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.prefs.Preferences;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 
 /**
  * Provides methods to work with Windows.
@@ -137,4 +146,69 @@ public class WindowUtility {
             }
         }
     }
+    /**
+     * Adds a listener to the dialog to close the dialog if the user presses the
+     * escape key.
+     *
+     * @param dialog
+     * @param hide If true, the dialog will be hidden rather than disposed of.
+     */
+    public static void addEscapeListener(final JDialog dialog, final boolean hide) {
+        ActionListener escListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (hide) {
+                    // Hide the dialog
+                    dialog.setVisible(false);
+                } else {
+                    // Dispose of the dialog. 
+                    dialog.dispose();
+                }
+            }
+        };
+        dialog.getRootPane().registerKeyboardAction(escListener,
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_IN_FOCUSED_WINDOW);
+    }
+
+    /**
+     * Obtains the title bar icon configured for this SOLA application based on
+     * the LAF theme.
+     *
+     * @return
+     */
+    public static Icon getTitleBarIcon() {
+        Icon result = UIManager.getIcon("solaTitleBarIcon");
+        if (result == null) {
+            result = new ImageIcon();
+        }
+        return result;
+    }
+
+    /**
+     * Obtains the title bar image configured for this SOLA application based on
+     * the LAF theme.
+     *
+     * @return
+     */
+    public static Image getTitleBarImage() {
+        return ((ImageIcon) getTitleBarIcon()).getImage();
+    }
+
+    /**
+     * Formats the frame title by moving it 8 spaces to the left to account for
+     * the sola image icon.
+     *
+     * @param title Title of the dialog
+     * @return
+     */
+    public static String formatFrameTitle(String title) {
+        String pre = "";
+        if (UIManager.getBoolean("solaLAF")) {
+            pre = String.format("%" + 8 + "s", pre);
+        }
+        return pre + title;
+    }
 }
+
